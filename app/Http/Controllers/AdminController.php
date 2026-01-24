@@ -123,10 +123,15 @@ class AdminController extends Controller
             'category' => 'required',
             'price' => 'required|numeric',
             'status' => 'required',
-            'is_hot_today' => 'nullable|boolean'
+            'is_hot_today' => 'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $data['is_hot_today'] = $request->has('is_hot_today');
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('menus', 'public');
+        }
 
         Menu::create($data);
 
@@ -141,17 +146,27 @@ class AdminController extends Controller
 
     public function updateMenu(Request $request, $id)
     {
+        $menu = Menu::findOrFail($id);
+
         $data = $request->validate([
             'name' => 'required',
             'category' => 'required',
             'price' => 'required|numeric',
             'status' => 'required',
-            'is_hot_today' => 'nullable|boolean'
+            'is_hot_today' => 'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $data['is_hot_today'] = $request->has('is_hot_today');
 
-        $menu = Menu::findOrFail($id);
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($menu->image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($menu->image);
+            }
+            $data['image'] = $request->file('image')->store('menus', 'public');
+        }
+
         $menu->update($data);
 
         return redirect()->route('admin.menu.index')->with('success', 'Menu berhasil diupdate');
@@ -163,5 +178,11 @@ class AdminController extends Controller
         $menu->delete();
 
         return redirect()->route('admin.menu.index')->with('success', 'Menu berhasil dihapus');
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        return view('admin.profile', compact('user'));
     }
 }

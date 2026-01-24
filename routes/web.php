@@ -16,6 +16,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
     Route::get('/dashboard', [AdminController::class, 'index']);
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::get('/admin/orders/{id}', [AdminController::class, 'showOrder'])->name('admin.orders.show');
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders.index');
     

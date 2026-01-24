@@ -16,20 +16,24 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create Owner
-        User::factory()->create([
-            'name' => 'Owner',
-            'email' => 'owner@gmail.com',
-            'role' => 'owner',
-            'password' => bcrypt('password'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'owner@gmail.com'],
+            [
+                'name' => 'Owner',
+                'role' => 'owner',
+                'password' => bcrypt('owner123'),
+            ]
+        );
 
         // Create Admin (Kasir)
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'role' => 'kasir',
-            'password' => bcrypt('password'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin',
+                'role' => 'kasir',
+                'password' => bcrypt('password'),
+            ]
+        );
 
         $this->call([
             AdminDashboardSeeder::class,

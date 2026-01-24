@@ -15,9 +15,20 @@ class Menu extends Model
         'price',
         'status',
         'is_hot_today',
+        'image',
     ];
 
     protected $casts = [
         'is_hot_today' => 'boolean',
     ];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random&size=128';
+    }
 }
