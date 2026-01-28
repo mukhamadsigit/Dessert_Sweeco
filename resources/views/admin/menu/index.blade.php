@@ -37,6 +37,15 @@
                         <td class="p-4">
                             <div class="font-bold text-gray-800 group-hover:text-red-500 transition-colors">{{ $menu->name }}</div>
                             <div class="text-[10px] text-gray-400">ID: #{{ $menu->id }}</div>
+                            @if(!empty($menu->tags))
+                                <div class="flex flex-wrap gap-1 mt-1">
+                                    @foreach($menu->tags as $tag)
+                                        <span class="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-gray-100 border border-gray-200 text-gray-500">
+                                            {{ $tag }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
                         </td>
                         <td class="p-4">
                             <span class="px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-lg uppercase">

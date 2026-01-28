@@ -37,8 +37,10 @@
                     <div>
                         <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 font-bold">Kategori</label>
                         <select name="category" class="w-full rounded-2xl border-gray-100 bg-gray-50 focus:bg-white p-4 focus:ring-4 focus:ring-red-500/10 focus:border-red-500 transition-all font-bold text-gray-800 appearance-none">
-                            <option value="Food">Makanan</option>
-                            <option value="Drink">Minuman</option>
+                            <option value="cookies">cookies</option>
+                            <option value="Healty Deesert Bowl">Healty Deesert Bowl</option>
+                            <option value="Pudding & Panacotta">Pudding & Panacotta</option>
+                            <option value="Tart & pie">Tart & pie</option>
                         </select>
                     </div>
 

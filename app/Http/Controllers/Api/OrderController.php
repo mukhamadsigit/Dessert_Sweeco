@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -29,6 +30,8 @@ class OrderController extends Controller
             DB::beginTransaction();
 
             $order = Order::create([
+                'user_id' => Auth::id(),
+                'address' => Auth::user()->address,
                 'customer_name' => $request->customer_name,
                 'total_amount' => 0, // Will calculate below
                 'status' => 'pending',

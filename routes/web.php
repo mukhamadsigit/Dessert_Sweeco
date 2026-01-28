@@ -4,14 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->middleware('guest')->name('login.authenticate');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest')->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('register.store');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
@@ -33,4 +37,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/menu/{id}/edit', [AdminController::class, 'editMenu'])->name('admin.menu.edit');
     Route::put('/admin/menu/{id}', [AdminController::class, 'updateMenu'])->name('admin.menu.update');
     Route::delete('/admin/menu/{id}', [AdminController::class, 'destroyMenu'])->name('admin.menu.destroy');
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/orders', [UserController::class, 'orders'])->name('user.orders');
+    Route::post('/user/checkout', [UserController::class, 'checkout'])->name('user.checkout');
+    
+    // Favorites
+    Route::get('/user/favorites', [UserController::class, 'favorites'])->name('user.favorites');
+    Route::post('/user/favorites/{id}', [UserController::class, 'toggleFavorite'])->name('user.favorites.toggle');
+
+    // Hot Today
+    Route::get('/user/hot-today', [UserController::class, 'hotToday'])->name('user.hot-today');
 });

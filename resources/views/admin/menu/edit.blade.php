@@ -39,8 +39,10 @@
                     <div>
                         <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 font-bold">Kategori</label>
                         <select name="category" class="w-full rounded-2xl border-gray-100 bg-gray-50 focus:bg-white p-4 focus:ring-4 focus:ring-red-500/10 focus:border-red-500 transition-all font-bold text-gray-800 appearance-none">
-                            <option value="Food" {{ $menu->category == 'Food' ? 'selected' : '' }}>Makanan</option>
-                            <option value="Drink" {{ $menu->category == 'Drink' ? 'selected' : '' }}>Minuman</option>
+                            <option value="cookies" {{ $menu->category == 'cookies' ? 'selected' : '' }}>cookies</option>
+                            <option value="Healty Deesert Bowl" {{ $menu->category == 'Healty Deesert Bowl' ? 'selected' : '' }}>Healty Deesert Bowl</option>
+                            <option value="Pudding & Panacotta" {{ $menu->category == 'Pudding & Panacotta' ? 'selected' : '' }}>Pudding & Panacotta</option>
+                            <option value="Tart & pie" {{ $menu->category == 'Tart & pie' ? 'selected' : '' }}>Tart & pie</option>
                         </select>
                     </div>
 

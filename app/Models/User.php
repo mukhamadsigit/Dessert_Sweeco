@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+        'address',
     ];
 
     /**
@@ -48,5 +49,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    
+    public function favorites()
+    {
+        return $this->belongsToMany(Menu::class, 'favorites', 'user_id', 'menu_id')->withTimestamps();
     }
 }

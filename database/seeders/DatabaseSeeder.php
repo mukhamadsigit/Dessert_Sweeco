@@ -17,26 +17,51 @@ class DatabaseSeeder extends Seeder
     {
         // Create Owner
         User::updateOrCreate(
-            ['email' => 'owner@gmail.com'],
+            ['email' => 'owner@sweeco.com'],
             [
-                'name' => 'Owner',
+                'name' => 'Owner Sweeco',
                 'role' => 'owner',
-                'password' => bcrypt('owner123'),
+                'password' => bcrypt('password'),
+                'status' => 'active',
             ]
         );
 
-        // Create Admin (Kasir)
+        // Create Admin
         User::updateOrCreate(
-            ['email' => 'admin@gmail.com'],
+            ['email' => 'admin@sweeco.com'],
             [
-                'name' => 'Admin',
+                'name' => 'Admin Sweeco',
+                'role' => 'admin',
+                'password' => bcrypt('password'),
+                'status' => 'active',
+            ]
+        );
+
+        // Create Kasir
+        User::updateOrCreate(
+            ['email' => 'kasir@sweeco.com'],
+            [
+                'name' => 'Kasir Sweeco',
                 'role' => 'kasir',
                 'password' => bcrypt('password'),
+                'status' => 'active',
+            ]
+        );
+
+        // Create Regular User
+        User::updateOrCreate(
+            ['email' => 'user@gmail.com'],
+            [
+                'name' => 'User Biasa',
+                'role' => 'user',
+                'password' => bcrypt('password'),
+                'status' => 'active',
             ]
         );
 
         $this->call([
             AdminDashboardSeeder::class,
+            MenuLabelSeeder::class,
         ]);
     }
 }

@@ -21,6 +21,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            $roleType = $request->input('role_type');
 
             if ($user->status === 'banned') {
                 Auth::logout();
@@ -31,11 +32,24 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
+            // Admin/Staff path
+            if ($roleType === 'admin') {
+                if (in_array($user->role, ['owner', 'kasir', 'admin'])) {
+                    return redirect()->intended('dashboard');
+                } else {
+                    Auth::logout();
+                    return back()->withErrors([
+                        'email' => 'Hanya Admin atau Staff yang dapat mengakses portal ini.',
+                    ])->onlyInput('email');
+                }
+            }
+
+            // User path
             if ($user->role === 'owner' || $user->role === 'kasir' || $user->role === 'admin') {
                 return redirect()->intended('dashboard');
             }
 
-            return redirect()->intended('/');
+            return redirect()->intended('/user');
         }
 
         return back()->withErrors([
@@ -50,6 +64,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }
